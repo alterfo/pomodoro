@@ -3,10 +3,13 @@ require([
   "app",
 
   // Main Router.
-  "router"
+  "router",
+
+  "modules/timer"
+
 ],
 
-function(app, Router) {
+function(app, Router, Timer) {
 
   // Define your master router on the application namespace and trigger all
   // navigation from this instance.
@@ -37,5 +40,14 @@ function(app, Router) {
       Backbone.history.navigate(href.attr, true);
     }
   });
+
+  //test this shit:)
+
+  var t1 = new Timer.Model({duration: app.m25});
+  var t3 = new Timer.Model({
+    duration: 10
+  });
+  console.log(t1, t3);
+  t3.tick();
 
 });
