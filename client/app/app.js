@@ -5,6 +5,7 @@ define([
   "backbone",
 
   // Plugins.
+  "plugins/backbone-localstorage",
   "plugins/backbone.layoutmanager"
 ],
 
