@@ -1,7 +1,9 @@
 // Task module
 define([
   // Application.
-  "app"
+  "app",
+
+  "modules/pomodoro"
 ],
 
 // Map dependencies from above array.
@@ -12,7 +14,16 @@ function(app) {
 
   // Default Model.
   Task.Model = Backbone.Model.extend({
-  
+    defaults: function () {
+      return {
+        completed: false,
+        pomodoros: new Pomodoro.Collection();
+      }
+    },
+
+    delete: function () {
+      this.destroy();
+    }
   });
 
   // Default Collection.
@@ -22,7 +33,15 @@ function(app) {
 
   // Default View.
   Task.Views.Layout = Backbone.Layout.extend({
-    template: "task"
+    template: "task",
+    tagName: "ol",
+    className: "task-list"
+  });
+
+  Task.Views.Form = Backbone.Layout.extend({
+    template: "task-form",
+    tagName: "form",
+    className: "add-task"
   });
 
   // Return the module for AMD compliance.
