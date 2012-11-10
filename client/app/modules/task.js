@@ -12,7 +12,16 @@ function(app) {
 
   // Default Model.
   Task.Model = Backbone.Model.extend({
-  
+    defaults: function () {
+      return {
+        completed: false,
+        pomodoros: new Pomodoro.Collection();
+      }
+    },
+
+    delete: function () {
+      this.destroy();
+    }
   });
 
   // Default Collection.
