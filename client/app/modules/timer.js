@@ -15,6 +15,8 @@ function(app) {
 
     defaults: {
       completed: false,
+      progress: false,
+      started: false,
       timer: -1,
       count: 0
     },
@@ -48,6 +50,8 @@ function(app) {
 
     tick: function () {
 
+      this.set({ progress: true });
+
       var timer = this.get('timer');
       var count = this.get('count');;
 
@@ -72,11 +76,13 @@ function(app) {
 
 
     start: function () {
+      this.set({ started: true });
       this.tick();
     },
 
 
     pause: function () {
+      this.set({ progress: false });
       clearTimeout(this.get("timer"));
       this.trigger('timer-paused', this);
     },
@@ -89,6 +95,7 @@ function(app) {
 
 
     stop: function () {
+      this.set({ progress: false });
       clearTimeout(this.get("timer"));
       this.set({ timer: -1 });
       this.trigger('timer-stopped', this);
