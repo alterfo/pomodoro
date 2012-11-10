@@ -42,13 +42,5 @@ function(app, Router, Timer) {
     }
   });
 
-  //test this shit:)
-
-  var t1 = new Timer.Model({duration: app.m25});
-  var t3 = new Timer.Model({
-    duration: 10
-  });
-  console.log(t1, t3);
-  t3.tick();
 
 });

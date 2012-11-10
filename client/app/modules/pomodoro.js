@@ -21,8 +21,19 @@ function(app) {
   });
 
   // Default View.
-  Pomodoro.Views.Layout = Backbone.Layout.extend({
-    template: "pomodoro"
+  Pomodoro.Views.List = Backbone.Layout.extend({
+    template: "pomodoro",
+    tagName: "ul",
+    className: "tomato-count",
+    initialize: function () {
+      this.collection.on("change", this.render, this);
+    },
+    serialize: function () {
+      console.log(this.collection)
+      return {
+        count: this.collection.length
+      };
+    }
   });
 
   // Return the module for AMD compliance.
