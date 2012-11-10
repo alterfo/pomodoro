@@ -64,7 +64,8 @@ function(app) {
         if (count === 0) {
           return that.set({
             timer:     -1,
-            completed: true
+            completed: true,
+            progress:  false
           });
         }
         that.tick();
