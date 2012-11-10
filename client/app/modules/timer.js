@@ -110,31 +110,54 @@ function(app) {
         timer.set({ duration: app.seconds[key] });
         that.count = count + 1;
       });
+      this.add({});
     },
 
     localStorage: new Store('pomodoro')
 
   });
 
-  
+
   Timer.Views.Clock = Backbone.View.extend({
     template: 'timer/time',
     tagName: 'time',
     className: 'lcd',
     initialize: function () {
-      this.model.on("change", this.render, this);
+      this.model.on("change:time", this.render, this);
     },
     serialize: function () {
-      return {
-        time: this.model.get('time')
-      };
+      return this.model.attributes
     }
   });
+
 
   Timer.Views.Controls = Backbone.View.extend({
     template:  'timer/controls',
     tagName:   'nav',
-    className: 'controls'
+    className: 'controls',
+    initialize: function () {
+      this.model.on("change:progress", this.render, this);
+    },
+    events: {
+      'click .btn-go': 'start',
+      'click .btn-pause': 'pause',
+      'click .btn-resume': 'resume'
+    },
+    start: function () {
+      this.model.start();
+      this.render();
+    },
+    serialize: function () {
+      return this.model.attributes
+    },
+    pause: function () {
+      this.model.pause();
+      this.render();
+    },
+    resume: function () {
+      this.model.resume();
+      this.render();
+    }
   });
 
   // Return the module for AMD compliance.

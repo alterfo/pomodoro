@@ -22,13 +22,13 @@ function(app, Timer) {
       var collections = {
         timers: new Timer.Collection()
       };
-      // add the first timer
-      collections.timers.add({});
       _.extend(this, collections);
+
+      var firstTimer = { model: collections.timers.last() };
       app.useLayout().setViews({
         ".header": [
-          new Timer.Views.Clock({ model: collections.timers.last() }),
-          new Timer.Views.Controls()
+          new Timer.Views.Clock(firstTimer),
+          new Timer.Views.Controls(firstTimer)
         ]
       }).render();
     }
