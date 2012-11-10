@@ -130,10 +130,15 @@ function(app) {
     tagName: 'time',
     className: 'lcd',
     initialize: function () {
+      // redraw the clock when 
       this.model.on("change:time", this.render, this);
     },
     serialize: function () {
-      return this.model.attributes
+      // set html5 time[datetime] as a duration (P)
+      this.$el.attr('datetime', 'P' + this.model.get('count') + 'S');
+      return {
+        time: this.model.get('time')
+      };
     }
   });
 
@@ -143,6 +148,7 @@ function(app) {
     tagName:   'nav',
     className: 'controls',
     initialize: function () {
+      // progress boolean on the model indicates timer is counting down
       this.model.on("change:progress", this.render, this);
     },
     events: {
@@ -150,20 +156,17 @@ function(app) {
       'click .btn-pause': 'pause',
       'click .btn-resume': 'resume'
     },
-    start: function () {
-      this.model.start();
-      this.render();
-    },
     serialize: function () {
       return this.model.attributes
     },
+    start: function () {
+      this.model.start();
+    },
     pause: function () {
       this.model.pause();
-      this.render();
     },
     resume: function () {
       this.model.resume();
-      this.render();
     }
   });
 

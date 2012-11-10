@@ -1,9 +1,11 @@
 <ul>
   <% if (!started) { %>
     <li><a class="btn btn-go" href="">GO</a></li>
-  <% } else if (progress) { %>
+  <% } else { %>
+    <% if (progress) { %>
       <li><a class="btn btn-pause" href="">Pause</a></li>
     <% } else { %>
       <li><a class="btn btn-resume" href="">Resume</a></li>
     <% } %>
+  <% } %>
 </ul>
