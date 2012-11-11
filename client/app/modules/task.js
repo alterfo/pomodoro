@@ -7,7 +7,7 @@ define([
 ],
 
 // Map dependencies from above array.
-function(app) {
+function(app, Pomodoro) {
 
   // Create a new module.
   var Task = app.module();
@@ -17,12 +17,16 @@ function(app) {
     defaults: function () {
       return {
         completed: false,
-        pomodoros: new Pomodoro.Collection();
+        pomodoros: new Pomodoro.Collection()
       }
     },
 
     delete: function () {
       this.destroy();
+    },
+
+    toggle: function () {
+        this.set({ completed: !this.get('completed') });
     }
   });
 
@@ -32,16 +36,33 @@ function(app) {
   });
 
   // Default View.
-  Task.Views.Layout = Backbone.Layout.extend({
+  Task.Views.List = Backbone.Layout.extend({
     template: "task",
     tagName: "ol",
-    className: "task-list"
+    className: "task-list",
+    initialize: function () {
+      this.collection.on('change', this.render, this);
+    },
+    serialize: function () {
+      return {
+        todos: this.collection
+      };
+    }
   });
 
   Task.Views.Form = Backbone.Layout.extend({
     template: "task-form",
     tagName: "form",
-    className: "add-task"
+    className: "add-task",
+    initialize: function () {
+      this.collection.on('change', this.render, this);
+    },
+    events: {
+      "submit" :"addTask"
+    },
+    addTask: function () {
+      this.collection.add({ content: $('[name="title"]', this.$el).val() });
+    }
   });
 
   // Return the module for AMD compliance.

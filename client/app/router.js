@@ -3,10 +3,10 @@ define([
   "app",
 
   "modules/timer",
-  "modules/pomodoro"
+  "modules/task"
 ],
 
-function(app, Timer, Pomodoro) {
+function(app, Timer, Task) {
 
   // Defining the application router, you can attach sub routers here.
   var Router = Backbone.Router.extend({
@@ -22,18 +22,21 @@ function(app, Timer, Pomodoro) {
     initialize: function () {
       var collections = {
         timers: new Timer.Collection(),
-        pomodoros: new Pomodoro.Collection()
+        tasks: new Task.Collection()
       };
       _.extend(this, collections);
-      collections.pomodoros.add([{x:1}, {x:2}, {x:3}]);
+      window.collections = collections;
 
-      var firstTimer = { model: collections.timers.last() };
+      var lastTimer = { model: collections.timers.last() };
       app.useLayout().setViews({
         ".header": [
-          new Timer.Views.Clock(firstTimer),
-          new Timer.Views.Controls(firstTimer)
+          new Timer.Views.Clock(lastTimer),
+          new Timer.Views.Controls(lastTimer)
         ],
-        ".main": new Pomodoro.Views.List({ collection: collections.pomodoros})
+        ".main": [
+          new Task.Views.List({ collection: collections.tasks }),
+          new Task.Views.Form({ collection: collections.tasks })
+        ]
       }).render();
     }
 

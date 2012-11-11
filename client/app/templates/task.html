@@ -1,2 +1,6 @@
-<h2 class="hx"><%= content %></h2>
-<div class="poms"></div>
+<% _.forEach(function (item, index) { %>
+  <li>
+    <h2 class="hx"><%= item.content %></h2>
+    <div class="poms"></div>
+  </li>
+<% }); %>
