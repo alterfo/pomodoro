@@ -42,5 +42,8 @@ function(app, Router, Timer) {
     }
   });
 
+  $(function () {
+    $('form').live('submit', function (e) { e.preventDefault(); });
+  });
 
 });
