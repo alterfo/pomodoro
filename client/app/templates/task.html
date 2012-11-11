@@ -1,6 +1,6 @@
-<% _.forEach(function (item, index) { %>
-  <li>
-    <h2 class="hx"><%= item.content %></h2>
+<% _.forEach(todos, function (item, index) { console.log(item, index) %>
+<li<%=index == 0 ? " class='top-task'" : "" %>>
+    <h2><%= item.attributes.content %></h2>
     <div class="poms"></div>
   </li>
 <% }); %>
