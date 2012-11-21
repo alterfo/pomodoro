@@ -15,11 +15,7 @@ function($, _, Backbone) {
   // creation.
   var app = {
     // The root path to run the application.
-    root: "/",
-    seconds: {
-      m25: 60 * 25,
-      m5: 60 * 5
-    }
+    root: "/"
   };
 
   // Localize or create a new JavaScript Template object.

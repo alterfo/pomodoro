@@ -11,11 +11,16 @@ function(app, Timer, Task) {
   // Defining the application router, you can attach sub routers here.
   var Router = Backbone.Router.extend({
     routes: {
-      "": "index"
+      "": "index",
+      "completed": "completed"
     },
 
     index: function() {
       // Create a layout and associate it with the #main div.
+
+    },
+
+    completed: function () {
 
     },
 
@@ -27,12 +32,8 @@ function(app, Timer, Task) {
       _.extend(this, collections);
       window.collections = collections;
 
-      var lastTimer = { model: collections.timers.last() };
       app.useLayout().setViews({
-        ".header": [
-          new Timer.Views.Clock(lastTimer),
-          new Timer.Views.Controls(lastTimer)
-        ],
+        ".header": new Timer.Layout({ collection: collections.timers }),
         ".main": [
           new Task.Views.List({ collection: collections.tasks }),
           new Task.Views.Form({ collection: collections.tasks })

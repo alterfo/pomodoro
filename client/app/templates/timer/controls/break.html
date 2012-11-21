@@ -1,9 +1,10 @@
 <ul>
   <% if (!started) { %>
-    <li><a class="btn btn-go" href="">GO</a></li>
+    <li><a class="btn btn-start" href="">Start break</a></li>
   <% } else { %>
     <% if (progress) { %>
       <li><a class="btn btn-pause" href="">Pause</a></li>
+      <li><a class="btn btn-next" href="">Next task</a></li>
     <% } else { %>
       <li><a class="btn btn-resume" href="">Resume</a></li>
     <% } %>
