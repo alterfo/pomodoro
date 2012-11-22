@@ -143,16 +143,17 @@ function(app) {
 
   Timer.Views.Clock = Backbone.View.extend({
     template: 'timer/time',
-    tagName: 'time',
-    className: 'lcd',
+    className: 'cols-left',
     initialize: function () {
       this.model.on("change:time", this.render, this);
     },
     serialize: function () {
       // set html5 time[datetime] as a duration (P)
-      this.$el.attr('datetime', 'P' + this.model.get('count') + 'S');
+      var cssClass = this.model.get('started') ? this.model.get('type') == 'pomodoro' ? ' counting': ' waiting': ''
       return {
-        time: this.model.get('time')
+        time: this.model.get('time'),
+        count: this.model.get('count'),
+        cssClass: cssClass
       };
     }
   });
@@ -161,7 +162,7 @@ function(app) {
   Timer.Views.PomodoroControls = Backbone.View.extend({
     template:  'timer/controls/pomodoro',
     tagName:   'nav',
-    className: 'controls',
+    className: 'controls cols-right',
     events: {
       'click .btn-go': 'go',
       'click .btn-postpone': 'postpone',
@@ -183,14 +184,13 @@ function(app) {
       this.model.stop();
       this.model.collection.add({});
     }
-
   });
 
 
    Timer.Views.BreakControls = Backbone.View.extend({
     template:  'timer/controls/break',
     tagName:   'nav',
-    className: 'controls',
+    className: 'controls cols-right',
     events: {
       'click .btn-start': 'start',
       'click .btn-pause': 'pause',
@@ -222,7 +222,7 @@ function(app) {
       this.collection.on("change:progress", this.render, this);
       this.collection.on("add", this.render, this);
     },
-    template:  'timer/layout',
+    className: 'cols',
     beforeRender: function () {
       var last = this.collection.last();
       var type = last.get('type');

@@ -36,8 +36,15 @@ body > h1:first-child {
 /*
  * header
  */
-.header {
-    text-align: center;
+.cols-left,
+.cols-right {
+  float: left;
+  width: 35%;
+}
+
+.cols-left {
+  width: 65%;
+  text-align: right;
 }
 
 .lcd {
@@ -273,5 +280,4 @@ body > h1:first-child {
 .tomato-count:after {
     clear: both;
 }
-
 
