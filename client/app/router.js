@@ -33,10 +33,10 @@ function(app, Timer, Task) {
       window.collections = collections;
 
       app.useLayout().setViews({
-        ".header": new Timer.Layout({ collection: collections.timers }),
+        ".header": new Timer.Layout(collections),
         ".main": [
-          new Task.Views.List({ collection: collections.tasks }),
-          new Task.Views.Form({ collection: collections.tasks })
+          new Task.Views.List(collections),
+          new Task.Views.Form(collections)
         ]
       }).render();
     }

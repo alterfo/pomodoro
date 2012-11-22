@@ -33,7 +33,7 @@ function(app, Pomodoro) {
     },
 
     toggle: function () {
-        this.set({ completed: !this.get('completed') });
+      this.set({ completed: !this.get('completed') });
     }
   });
 
@@ -48,11 +48,11 @@ function(app, Pomodoro) {
     tagName: "ol",
     className: "task-list",
     initialize: function () {
-      this.collection.on('add', this.render, this);
+      this.options.tasks.on('add', this.render, this);
     },
     serialize: function () {
       return {
-        todos: this.collection.models
+        todos: this.options.tasks.models
       };
     }
   });
@@ -62,14 +62,14 @@ function(app, Pomodoro) {
     tagName: "form",
     className: "add-task",
     initialize: function () {
-      this.collection.on('add', this.render, this);
+      this.options.tasks.on('add', this.render, this);
     },
     events: {
       "submit" :"addTask"
     },
     addTask: function () {
       var title = $('[name="title"]', this.$el).val();
-      this.collection.add({ content: title });
+      this.options.tasks.add({ content: title });
     }
   });
 

@@ -61,7 +61,7 @@ function(app) {
 
     toTime: function (secs) {
       var pad = function (num) {
-        return (num > 9)? "" + num: "0" + num;
+        return (num > 9) ? "" + num : "0" + num;
       };
       return pad(Math.floor(secs / 60)) + ":" + pad(secs % 60);
     },
@@ -158,8 +158,7 @@ function(app) {
       this.model.on("change:time", this.render, this);
     },
     serialize: function () {
-      // set html5 time[datetime] as a duration (P)
-      var cssClass = this.model.get('started') ? this.model.get('type') == 'pomodoro' ? ' counting': ' waiting': ''
+      var cssClass = this.model.get('started') ? this.model.get('type') == 'pomodoro' ? ' counting': ' waiting': '';
       return {
         time: this.model.get('time'),
         count: this.model.get('count'),
@@ -228,16 +227,14 @@ function(app) {
 
   Timer.Layout = Backbone.Layout.extend({
     initialize: function () {
-      // progress boolean on the model indicates timer is counting down
-      this.collection.on("change:progress", this.render, this);
-      this.collection.on("add", this.render, this);
+      this.options.timers.on("change:progress add", this.render, this);
     },
     className: 'cols',
     beforeRender: function () {
-      var last = this.collection.last();
+      var last = this.options.timers.last();
       var type = last.get('type');
       this.insertView(new Timer.Views.Clock({ model: last }));
-      this.insertView(new Timer.Views[type == "pomodoro" ? 'PomodoroControls' : 'BreakControls']({ model: last }));
+      this.insertView(new Timer.Views[(type == "pomodoro" ? 'Pomodoro' : 'Break') + 'Controls']({ model: last }));
     }
   });
 
