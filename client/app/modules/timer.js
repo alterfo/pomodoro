@@ -10,6 +10,8 @@ function(app) {
   // Create a new module.
   var Timer = app.module();
 
+  var alarm = document.getElementById('alarm');
+
   var types = {
     'pomodoro': 25,
     'break': 5,
@@ -45,6 +47,14 @@ function(app) {
       });
       this.on('change:type', function (timer, value) {
         timer.set({ duration: parseInt(types[value], 10) * 60 });
+      });
+      this.on('change:completed', function (timer, value) {
+        if (value) {
+          alarm.play();
+        }
+        if (timer.get('type') == 'pomodoro') {
+          
+        }
       });
     },
 
