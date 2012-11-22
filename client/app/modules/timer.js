@@ -53,7 +53,8 @@ function(app) {
           alarm.play();
         }
         if (timer.get('type') == 'pomodoro') {
-          
+          // needs a refactor so that this global (collections) isn't used!
+          collections.tasks.first().get('pomodoros').add({});
         }
       });
     },
@@ -88,7 +89,7 @@ function(app) {
           });
         }
         that.tick();
-      }, 1000);
+      }, 1);
 
       this.set({ timer: timer });
 

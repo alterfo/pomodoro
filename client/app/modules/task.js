@@ -75,6 +75,9 @@ function(app, Pomodoro) {
       if (this.options.top) {
         this.el.className += ' top-task';
       }
+      this.setViews({
+        '.poms': new Pomodoro.Views.List({ collection: this.model.get('pomodoros') })
+      });
     }
   });
 
@@ -83,10 +86,10 @@ function(app, Pomodoro) {
     tagName: "form",
     className: "add-task",
     initialize: function () {
-      this.options.tasks.on('add', this.render, this);
+      this.options.tasks.on('add change', this.render, this);
     },
     events: {
-      "submit" :"addTask"
+      "submit": "addTask"
     },
     addTask: function () {
       var title = $('[name="title"]', this.$el).val();

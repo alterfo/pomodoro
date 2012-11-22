@@ -26,7 +26,7 @@ function(app) {
     tagName: "ul",
     className: "tomato-count",
     initialize: function () {
-      this.collection.on("change", this.render, this);
+      this.collection.on("add", this.render, this);
     },
     serialize: function () {
       return {
