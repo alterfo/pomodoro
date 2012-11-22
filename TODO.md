@@ -1,11 +1,10 @@
 ## Client
 
-* Append pomodoros to top task
-* Edit tasks:
-* * Edit content
-* * Re-order items
-* * Complete items
-* * Delete items
+* Stop using window.collections in the timer model
+* Edit task content
+* Re-order tasks
+* Complete tasks
+* Delete tasks
 * Router: filter by completed tasks
 
 
