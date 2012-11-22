@@ -29,7 +29,6 @@ function(app) {
       this.collection.on("change", this.render, this);
     },
     serialize: function () {
-      console.log(this.collection)
       return {
         count: this.collection.length
       };

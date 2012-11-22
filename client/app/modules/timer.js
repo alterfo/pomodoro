@@ -178,20 +178,21 @@ function(app) {
       'click .btn-complete': 'complete'
     },
     serialize: function () {
-      return this.model.attributes
+      return this.options.timers.last().attributes
     },
     go: function () {
-      this.model.start();
+      this.options.timers.last().start();
     },
     postpone: function () {
       this.stop();
     },
     complete: function () {
       this.stop();
+      this.options.tasks.first().get('pomodoros').add({});
     },
     stop: function () {
-      this.model.stop();
-      this.model.collection.add({});
+      this.options.timers.last().stop();
+      this.options.timers.last().collection.add({});
     }
   });
 
@@ -207,20 +208,20 @@ function(app) {
       'click .btn-next': 'next'
     },
     serialize: function () {
-      return this.model.attributes
+      return this.options.timers.last().attributes
     },
     start: function () {
-      this.model.start();
+      this.options.timers.last().start();
     },
     pause: function () {
-      this.model.pause();
+      this.options.timers.last().pause();
     },
     resume: function () {
-      this.model.resume();
+      this.options.timers.last().resume();
     },
     next: function () {
-      this.model.stop();
-      this.model.collection.add({});
+      this.options.timers.last().stop();
+      this.options.timers.last().collection.add({});
     }
   });
 
@@ -234,7 +235,7 @@ function(app) {
       var last = this.options.timers.last();
       var type = last.get('type');
       this.insertView(new Timer.Views.Clock({ model: last }));
-      this.insertView(new Timer.Views[(type == "pomodoro" ? 'Pomodoro' : 'Break') + 'Controls']({ model: last }));
+      this.insertView(new Timer.Views[(type == "pomodoro" ? 'Pomodoro' : 'Break') + 'Controls'](this.options));
     }
   });
 

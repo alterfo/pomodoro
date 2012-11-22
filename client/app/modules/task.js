@@ -54,6 +54,27 @@ function(app, Pomodoro) {
       return {
         todos: this.options.tasks.models
       };
+    },
+    beforeRender: function () {
+      var that = this;
+      this.options.tasks.each(function (model, i) {
+        that.insertView(new Task.Views.Item({ model: model, top: i == 0 }));
+      });
+    }
+  });
+
+  Task.Views.Item = Backbone.Layout.extend({
+    template: "task",
+    tagName: 'li',
+    serialize: function () {
+      return {
+        content: this.model.get('content')
+      };
+    },
+    beforeRender: function () {
+      if (this.options.top) {
+        this.el.className += ' top-task';
+      }
     }
   });
 
