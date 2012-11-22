@@ -89,7 +89,7 @@ function(app) {
           });
         }
         that.tick();
-      }, 1);
+      }, 1000);
 
       this.set({ timer: timer });
 
