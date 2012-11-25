@@ -1,6 +1,5 @@
 ## Client
 
-* Re-order tasks
 * Complete tasks
 * Router: filter by completed tasks
 

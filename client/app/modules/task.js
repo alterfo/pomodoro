@@ -46,9 +46,16 @@ function(app, Pomodoro) {
   Task.Views.List = Backbone.Layout.extend({
     tagName: 'ol',
     className: 'task-list',
+    events: {
+      'update-sort': 'updateSort'
+    },
     initialize: function () {
       this.options.tasks.on('add remove', this.render, this);
-      this.$el.sortable();
+      this.$el.sortable({
+        stop: function (e, ui) {
+          ui.item.trigger('drop', ui.item.index());
+        }
+      });
     },
     serialize: function () {
       return {
@@ -60,6 +67,15 @@ function(app, Pomodoro) {
       this.options.tasks.each(function (model, i) {
         that.insertView(new Task.Views.Item({ model: model, top: i == 0 }));
       });
+    },
+    updateSort: function (e, model, index) {
+      this.options.tasks.remove(model);
+      this.options.tasks.each(function (model, i) {
+        model.set('ordinal', (i >= index) ? i + 1: i);
+      });
+      model.set('ordinal', index);
+      this.options.tasks.add(model, {at: index});
+      this.render();
     }
   });
 
@@ -72,7 +88,8 @@ function(app, Pomodoro) {
     events: {
       'dblclick h2': 'edit',
       'click .edit-update': 'update',
-      'click .edit-del': 'delete'
+      'click .edit-del': 'delete',
+      'drop': 'drop'
     },
     serialize: function () {
       return {
@@ -84,11 +101,7 @@ function(app, Pomodoro) {
       if (this.options.top) {
         this.$el.addClass('top-task');
       }
-      if (this.model.get('editing')) {
-        this.$el.addClass('editing');
-      } else {
-        this.$el.removeClass('editing')
-      }
+      this.$el[(this.model.get('editing') ? 'add' : 'remove') + 'Class']('editing');
       this.setViews({
         '.poms': new Pomodoro.Views.List({ collection: this.model.get('pomodoros') })
       });
@@ -109,6 +122,9 @@ function(app, Pomodoro) {
       if (confirm('Are you sure?')) {
         this.model.collection.remove(this.model);
       }
+    },
+    drop: function (e, index) {
+      this.$el.trigger('update-sort', [this.model, index]);
     }
   });
 
