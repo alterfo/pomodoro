@@ -41,6 +41,7 @@ function(app, Pomodoro) {
       o.pomodoros = new Pomodoro.Collection(o);
       return o;
     }
+
   });
 
   // Default Collection.
@@ -99,10 +100,10 @@ function(app, Pomodoro) {
     updateSort: function (e, model, index) {
       this.options.tasks.remove(model);
       this.options.tasks.each(function (model, i) {
-        model.set('ordinal', (i >= index) ? i + 1: i);
+        model.save('ordinal', (i >= index) ? i + 1: i);
       });
       model.set('ordinal', index);
-      this.options.tasks.add(model, {at: index});
+      this.options.tasks.create(model, {at: index});
       this.render();
     }
 
