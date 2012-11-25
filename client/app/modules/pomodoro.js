@@ -17,22 +17,30 @@ function(app) {
 
   // Default Collection.
   Pomodoro.Collection = Backbone.Collection.extend({
+
     model: Pomodoro.Model
+
   });
 
   // Default View.
   Pomodoro.Views.List = Backbone.Layout.extend({
+
     template: 'pomodoro',
+
     tagName: 'ul',
+
     className: 'tomato-count',
+
     initialize: function () {
       this.collection.on('add', this.render, this);
     },
+
     serialize: function () {
       return {
         count: this.collection.length
       };
     }
+
   });
 
   // Return the module for AMD compliance.

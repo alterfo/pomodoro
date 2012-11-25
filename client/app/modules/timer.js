@@ -144,11 +144,15 @@ function(app) {
 
 
   Timer.Views.Clock = Backbone.View.extend({
+
     template: 'timer/time',
+
     className: 'cols-left',
+
     initialize: function () {
       this.model.on('change:time', this.render, this);
     },
+
     serialize: function () {
       var cssClass = this.model.get('started') ? this.model.get('type') == 'pomodoro' ? ' counting': ' waiting': '';
       return {
@@ -157,71 +161,95 @@ function(app) {
         cssClass: cssClass
       };
     }
+
   });
 
 
   Timer.Views.PomodoroControls = Backbone.View.extend({
+
     template:  'timer/controls/pomodoro',
+
     tagName:   'nav',
+
     className: 'controls cols-right',
+
     events: {
       'click .btn-go': 'go',
       'click .btn-postpone': 'postpone',
       'click .btn-complete': 'complete'
     },
+
     serialize: function () {
       return this.options.timers.last().attributes
     },
+
     go: function () {
       if (this.options.tasks.length == 0) {
         return $('[name="title"]').focus();
       }
       this.options.timers.last().start();
     },
+
     postpone: function () {
       this.stop();
     },
+
     complete: function () {
       this.stop();
       this.options.tasks.first().toggle();
     },
+
     stop: function () {
       this.options.timers.last().stop();
       this.options.timers.last().collection.add({});
     }
+
   });
 
 
    Timer.Views.BreakControls = Backbone.View.extend({
+
     template:  'timer/controls/break',
+
     tagName:   'nav',
+
     className: 'controls cols-right',
+
     events: {
       'click .btn-start': 'start',
       'click .btn-pause': 'pause',
       'click .btn-resume': 'resume',
       'click .btn-next': 'next'
     },
+
     serialize: function () {
       return this.options.timers.last().attributes
     },
+
     start: function () {
       this.options.timers.last().start();
     },
+
     pause: function () {
       this.options.timers.last().pause();
     },
+
     resume: function () {
       this.options.timers.last().resume();
     },
+
     next: function () {
       this.options.timers.last().stop();
       this.options.timers.last().collection.add({});
     }
+
   });
 
 
   Timer.Layout = Backbone.Layout.extend({
+
+    className: 'cols',
+
     initialize: function () {
       this.options.timers.on('change:progress add', this.render, this);
       this.options.timers.on('change:completed', function (timer, value) {
@@ -234,13 +262,14 @@ function(app) {
         }
       }, this);
     },
-    className: 'cols',
+
     beforeRender: function () {
       var last = this.options.timers.last();
       var type = last.get('type');
       this.insertView(new Timer.Views.Clock({ model: last }));
       this.insertView(new Timer.Views[(type == 'pomodoro' ? 'Pomodoro' : 'Break') + 'Controls'](this.options));
     }
+
   });
 
 
