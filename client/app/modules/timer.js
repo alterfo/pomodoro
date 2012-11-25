@@ -182,6 +182,9 @@ function(app) {
       return this.options.timers.last().attributes
     },
     go: function () {
+      if (this.options.tasks.length == 0) {
+        return $('[name="title"]').focus();
+      }
       this.options.timers.last().start();
     },
     postpone: function () {
