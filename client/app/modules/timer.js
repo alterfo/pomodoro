@@ -1,7 +1,7 @@
 // Timer module
 define([
   // Application.
-  "app"
+  'app'
 ],
 
 // Map dependencies from above array.
@@ -62,9 +62,9 @@ function(app) {
 
     toTime: function (secs) {
       var pad = function (num) {
-        return (num > 9) ? "" + num : "0" + num;
+        return (num > 9) ? '' + num : '0' + num;
       };
-      return pad(Math.floor(secs / 60)) + ":" + pad(secs % 60);
+      return pad(Math.floor(secs / 60)) + ':' + pad(secs % 60);
     },
 
 
@@ -104,7 +104,7 @@ function(app) {
 
     pause: function () {
       this.set({ progress: false });
-      clearTimeout(this.get("timer"));
+      clearTimeout(this.get('timer'));
       this.trigger('timer-paused', this);
     },
 
@@ -117,7 +117,7 @@ function(app) {
 
     stop: function () {
       this.set({ progress: false });
-      clearTimeout(this.get("timer"));
+      clearTimeout(this.get('timer'));
       this.set({ timer: -1 });
       this.trigger('timer-stopped', this);
     }
@@ -156,7 +156,7 @@ function(app) {
     template: 'timer/time',
     className: 'cols-left',
     initialize: function () {
-      this.model.on("change:time", this.render, this);
+      this.model.on('change:time', this.render, this);
     },
     serialize: function () {
       var cssClass = this.model.get('started') ? this.model.get('type') == 'pomodoro' ? ' counting': ' waiting': '';
@@ -229,14 +229,14 @@ function(app) {
 
   Timer.Layout = Backbone.Layout.extend({
     initialize: function () {
-      this.options.timers.on("change:progress add", this.render, this);
+      this.options.timers.on('change:progress add', this.render, this);
     },
     className: 'cols',
     beforeRender: function () {
       var last = this.options.timers.last();
       var type = last.get('type');
       this.insertView(new Timer.Views.Clock({ model: last }));
-      this.insertView(new Timer.Views[(type == "pomodoro" ? 'Pomodoro' : 'Break') + 'Controls'](this.options));
+      this.insertView(new Timer.Views[(type == 'pomodoro' ? 'Pomodoro' : 'Break') + 'Controls'](this.options));
     }
   });
 

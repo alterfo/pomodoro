@@ -1,7 +1,7 @@
 // Pomodoro module
 define([
   // Application.
-  "app"
+  'app'
 ],
 
 // Map dependencies from above array.
@@ -22,11 +22,11 @@ function(app) {
 
   // Default View.
   Pomodoro.Views.List = Backbone.Layout.extend({
-    template: "pomodoro",
-    tagName: "ul",
-    className: "tomato-count",
+    template: 'pomodoro',
+    tagName: 'ul',
+    className: 'tomato-count',
     initialize: function () {
-      this.collection.on("add", this.render, this);
+      this.collection.on('add', this.render, this);
     },
     serialize: function () {
       return {

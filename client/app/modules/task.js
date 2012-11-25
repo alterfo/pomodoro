@@ -1,9 +1,9 @@
 // Task module
 define([
   // Application.
-  "app",
+  'app',
 
-  "modules/pomodoro"
+  'modules/pomodoro'
 ],
 
 // Map dependencies from above array.
@@ -23,7 +23,7 @@ function(app, Pomodoro) {
     },
 
     validate: function (attrs) {
-      if ($.trim(attrs.content + "").length == 0) {
+      if ($.trim(attrs.content + '').length == 0) {
         return "content can't be empty";
       }
     },
@@ -44,9 +44,9 @@ function(app, Pomodoro) {
 
   // Default View.
   Task.Views.List = Backbone.Layout.extend({
-    template: "task",
-    tagName: "ol",
-    className: "task-list",
+    template: 'task',
+    tagName: 'ol',
+    className: 'task-list',
     initialize: function () {
       this.options.tasks.on('add', this.render, this);
     },
@@ -64,13 +64,13 @@ function(app, Pomodoro) {
   });
 
   Task.Views.Item = Backbone.Layout.extend({
-    template: "task",
+    template: 'task',
     tagName: 'li',
     initialize: function () {
       this.model.on('change:editing', this.render, this);
     },
     events: {
-      'dblclick h2': "edit"
+      'dblclick h2': 'edit'
     },
     serialize: function () {
       return {
@@ -95,14 +95,14 @@ function(app, Pomodoro) {
   });
 
   Task.Views.Form = Backbone.Layout.extend({
-    template: "task-form",
-    tagName: "form",
-    className: "add-task",
+    template: 'task-form',
+    tagName: 'form',
+    className: 'add-task',
     initialize: function () {
       this.options.tasks.on('add change', this.render, this);
     },
     events: {
-      "submit": "addTask"
+      'submit': 'addTask'
     },
     addTask: function () {
       var title = $('[name="title"]', this.$el).val();
