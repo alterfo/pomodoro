@@ -30,7 +30,6 @@ function(app, Timer, Task) {
         tasks: new Task.Collection()
       };
       _.extend(this, collections);
-      window.collections = collections;
 
       app.useLayout().setViews({
         ".header": new Timer.Layout(collections),

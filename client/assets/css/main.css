@@ -288,3 +288,10 @@ body > h1:first-child {
     clear: both;
 }
 
+.edit-controls {
+  display: none;
+}
+
+.editing .edit-controls {
+  display: block;
+}

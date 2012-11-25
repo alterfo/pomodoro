@@ -47,7 +47,7 @@ function(app, Pomodoro) {
     tagName: 'ol',
     className: 'task-list',
     initialize: function () {
-      this.options.tasks.on('add', this.render, this);
+      this.options.tasks.on('add remove', this.render, this);
     },
     serialize: function () {
       return {
@@ -69,7 +69,9 @@ function(app, Pomodoro) {
       this.model.on('change:editing', this.render, this);
     },
     events: {
-      'dblclick h2': 'edit'
+      'dblclick h2': 'edit',
+      'click .edit-update': 'update',
+      'click .edit-del': 'delete'
     },
     serialize: function () {
       return {
@@ -83,13 +85,29 @@ function(app, Pomodoro) {
       }
       if (this.model.get('editing')) {
         this.$el.addClass('editing');
+      } else {
+        this.$el.removeClass('editing')
       }
       this.setViews({
         '.poms': new Pomodoro.Views.List({ collection: this.model.get('pomodoros') })
       });
     },
     edit: function () {
+      this.model.collection.each(function (model) {
+        model.set({ editing: false });
+      });
       this.model.set({ editing: true });
+    },
+    update: function () {
+      this.model.set({
+        content: this.$el.find('input').val(),
+        editing: false
+      });
+    },
+    delete: function () {
+      if (confirm('Are you sure?')) {
+        this.model.collection.remove(this.model);
+      }
     }
   });
 
