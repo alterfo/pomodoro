@@ -48,6 +48,7 @@ function(app, Pomodoro) {
     className: 'task-list',
     initialize: function () {
       this.options.tasks.on('add remove', this.render, this);
+      this.$el.sortable();
     },
     serialize: function () {
       return {

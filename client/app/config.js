@@ -12,6 +12,7 @@ require.config({
 
     // Libraries.
     jquery: "../assets/js/libs/jquery",
+    jqueryui: "../assets/js/libs/jquery-ui-1.9.2.custom",
     lodash: "../assets/js/libs/lodash",
     backbone: "../assets/js/libs/backbone"
   },
@@ -19,7 +20,7 @@ require.config({
   shim: {
     // Backbone library depends on lodash and jQuery.
     backbone: {
-      deps: ["lodash", "jquery"],
+      deps: ["lodash", "jquery", "jqueryui"],
       exports: "Backbone"
     },
 
