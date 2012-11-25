@@ -39,7 +39,10 @@ function(app, Pomodoro) {
 
   // Default Collection.
   Task.Collection = Backbone.Collection.extend({
-    model: Task.Model
+    model: Task.Model,
+    comparator: function(todo) {
+      return todo.get('ordinal');
+    }
   });
 
   // Default View.
