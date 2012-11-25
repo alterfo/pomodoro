@@ -14,6 +14,7 @@ function(app, Pomodoro) {
 
   // Default Model.
   Task.Model = Backbone.Model.extend({
+
     defaults: function () {
       return {
         completed: false,
