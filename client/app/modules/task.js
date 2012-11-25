@@ -44,7 +44,6 @@ function(app, Pomodoro) {
 
   // Default View.
   Task.Views.List = Backbone.Layout.extend({
-    template: 'task',
     tagName: 'ol',
     className: 'task-list',
     initialize: function () {

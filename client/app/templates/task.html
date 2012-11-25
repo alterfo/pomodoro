@@ -1,2 +1,6 @@
-<h2><%= content %></h2>
+<% if (!editing) { %>
+  <h2><%= content %></h2>
+<% } else { %>
+  <input type="text" class="edit-input" name="title" value="<%= content %>">
+<% } %>
 <div class="poms"></div>

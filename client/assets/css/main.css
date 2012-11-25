@@ -154,12 +154,18 @@ body > h1:first-child {
     z-index: 100;
 }
 
-.task-list h2 {
+.task-list h2,
+.task-list input {
     margin: 0;
     cursor: move;
+    font-size: 20px;
+    line-height: 1em;
+    padding: 5px 0;
+    font-weight: bold;
 }
 
-.top-task h2 {
+.top-task h2,
+.top-task input {
     font-size: 28px;
 }
 
