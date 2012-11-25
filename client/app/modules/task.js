@@ -42,7 +42,7 @@ function(app, Pomodoro) {
     },
 
     parse: function (o) {
-      o.pomodoros = new Pomodoro.Collection(o);
+      o.pomodoros = new Pomodoro.Collection(o.pomodoros);
       return o;
     }
 

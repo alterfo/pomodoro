@@ -199,7 +199,8 @@ function(app) {
 
     stop: function () {
       this.options.timers.last().stop();
-      this.options.timers.last().collection.add({});
+      this.options.timers.add({});
+      this.options.timers.last().save();
     }
 
   });
@@ -256,6 +257,7 @@ function(app) {
           this.options.timers.add({});
           if (timer.get('type') == 'pomodoro') {
             this.options.tasks.first().get('pomodoros').add({});
+            this.options.tasks.first().save();
           }
         }
       }, this);
