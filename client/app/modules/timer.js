@@ -240,7 +240,7 @@ function(app) {
 
     next: function () {
       this.options.timers.last().stop();
-      this.options.timers.last().collection.add({});
+      this.options.timers.add({});
     }
 
   });
