@@ -12,7 +12,11 @@ function(app) {
 
   // Default Model.
   Pomodoro.Model = Backbone.Model.extend({
-  
+
+    defaults: {
+      pom: true
+    }
+
   });
 
   // Default Collection.

@@ -35,6 +35,11 @@ function(app, Pomodoro) {
 
     toggle: function () {
       this.set({ completed: !this.get('completed') });
+    },
+
+    parse: function (o) {
+      o.pomodoros = new Pomodoro.Collection(o);
+      return o;
     }
   });
 
@@ -43,7 +48,16 @@ function(app, Pomodoro) {
 
     model: Task.Model,
 
-    comparator: function(todo) {
+    localStorage: new Store('pomodoro'),
+
+    nextOrdinal: function () {
+      if (!this.length) {
+        return 1;
+      }
+      return this.last().get('ordinal') + 1;
+    },
+
+    comparator: function (todo) {
       return todo.get('ordinal');
     }
 
@@ -137,7 +151,7 @@ function(app, Pomodoro) {
     },
 
     update: function () {
-      this.model.set({
+      this.model.save({
         content: this.$el.find('input').val(),
         editing: false
       });
@@ -179,7 +193,11 @@ function(app, Pomodoro) {
 
     addTask: function () {
       var title = $('[name="title"]', this.$el).val();
-      this.options.tasks.add({ content: title });
+      this.options.tasks.add({ 
+        content: title,
+        ordinal: this.options.tasks.nextOrdinal()
+      });
+      this.options.tasks.last().save();
     }
 
   });

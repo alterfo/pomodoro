@@ -136,9 +136,7 @@ function(app) {
         that.count = count + 1;
       });
       this.add({});
-    },
-
-    localStorage: new Store('pomodoro')
+    }
 
   });
 
