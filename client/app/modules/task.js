@@ -66,18 +66,31 @@ function(app, Pomodoro) {
   Task.Views.Item = Backbone.Layout.extend({
     template: "task",
     tagName: 'li',
+    initialize: function () {
+      this.model.on('change:editing', this.render, this);
+    },
+    events: {
+      'dblclick h2': "edit"
+    },
     serialize: function () {
       return {
-        content: this.model.get('content')
+        content: this.model.get('content'),
+        editing: this.model.get('editing')
       };
     },
     beforeRender: function () {
       if (this.options.top) {
-        this.el.className += ' top-task';
+        this.$el.addClass('top-task');
+      }
+      if (this.model.get('editing')) {
+        this.$el.addClass('editing');
       }
       this.setViews({
         '.poms': new Pomodoro.Views.List({ collection: this.model.get('pomodoros') })
       });
+    },
+    edit: function () {
+      this.model.set({ editing: true });
     }
   });
 

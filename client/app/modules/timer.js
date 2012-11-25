@@ -73,7 +73,7 @@ function(app) {
       this.set({ progress: true });
 
       var timer = this.get('timer');
-      var count = this.get('count');;
+      var count = this.get('count');
 
       var that = this;
       timer = setTimeout(function () {
