@@ -48,14 +48,6 @@ function(app) {
       this.on('change:type', function (timer, value) {
         timer.set({ duration: parseInt(types[value], 10) * 60 });
       });
-      this.on('change:completed', function (timer, value) {
-        if (value) {
-          alarm.play();
-        }
-        if (timer.get('type') == 'pomodoro') {
-          app.router.tasks.first().get('pomodoros').add({});
-        }
-      });
     },
 
 
@@ -232,6 +224,15 @@ function(app) {
   Timer.Layout = Backbone.Layout.extend({
     initialize: function () {
       this.options.timers.on('change:progress add', this.render, this);
+      this.options.timers.on('change:completed', function (timer, value) {
+        if (value) {
+          alarm.play();
+          this.options.timers.add({});
+          if (timer.get('type') == 'pomodoro') {
+            this.options.tasks.first().get('pomodoros').add({});
+          }
+        }
+      }, this);
     },
     className: 'cols',
     beforeRender: function () {

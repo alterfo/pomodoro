@@ -3,9 +3,7 @@ require([
   "app",
 
   // Main Router.
-  "router",
-
-  "modules/timer"
+  "router"
 
 ],
 
