@@ -23,6 +23,10 @@ function(app, Pomodoro) {
       }
     },
 
+    initialize: function () {
+      this.on('remove', this.destroy, this);
+    },
+
     validate: function (attrs) {
       if ($.trim(attrs.content + '').length == 0) {
         return "content can't be empty";
