@@ -96,7 +96,10 @@ function(app, Pomodoro) {
 
     beforeRender: function () {
       var that = this;
-      this.options.tasks.each(function (model, i) {
+      var tasks = this.options.tasks.filter(function (task) {
+        return task.get('completed') == that.options.completed;
+      });
+      _.each(tasks, function (model, i) {
         that.insertView(new Task.Views.Item({ model: model, top: i == 0 }));
       });
     },

@@ -1,7 +1,8 @@
 ## Client
 
 * Complete tasks
-* Router: filter by completed tasks
+* Links to filter by completed
+* Remove all completed
 
 
 ### Nice to haves

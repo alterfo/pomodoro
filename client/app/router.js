@@ -16,22 +16,21 @@ function(app, Timer, Task) {
     },
 
     index: function() {
-      // Create a layout and associate it with the #main div.
-
+      this.setUp(false);
     },
 
     completed: function () {
-
+      this.setUp(true);
     },
 
-    initialize: function () {
+    setUp: function (completed) {
       var collections = {
         timers: new Timer.Collection(),
-        tasks: new Task.Collection()
+        tasks: new Task.Collection(),
+        completed: completed
       };
       _.extend(this, collections);
       collections.tasks.fetch();
-
       app.useLayout().setViews({
         ".header": new Timer.Layout(collections),
         ".main": [
