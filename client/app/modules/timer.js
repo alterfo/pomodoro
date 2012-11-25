@@ -183,7 +183,7 @@ function(app) {
     },
     complete: function () {
       this.stop();
-      this.options.tasks.first().get('pomodoros').add({});
+      this.options.tasks.first().toggle();
     },
     stop: function () {
       this.options.timers.last().stop();

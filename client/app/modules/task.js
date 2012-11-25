@@ -89,7 +89,8 @@ function(app, Pomodoro) {
       'dblclick h2': 'edit',
       'click .edit-update': 'update',
       'click .edit-del': 'delete',
-      'drop': 'drop'
+      'drop': 'drop',
+      'keypress .edit-input': 'updateOnEnter'
     },
     serialize: function () {
       return {
@@ -125,6 +126,11 @@ function(app, Pomodoro) {
     },
     drop: function (e, index) {
       this.$el.trigger('update-sort', [this.model, index]);
+    },
+    updateOnEnter: function (e) {
+      if (e.which === 13 && this.$el.find('input').val().trim()) {
+        this.update();
+      }
     }
   });
 
