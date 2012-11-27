@@ -18,6 +18,7 @@ function(app, Pomodoro) {
     defaults: function () {
       return {
         completed: false,
+        editing: false,
         pomodoros: new Pomodoro.Collection(),
         content:   ''
       }
@@ -38,7 +39,7 @@ function(app, Pomodoro) {
     },
 
     toggle: function () {
-      this.set({ completed: !this.get('completed') });
+      this.save({ completed: !this.get('completed') });
     },
 
     parse: function (o) {
@@ -64,6 +65,10 @@ function(app, Pomodoro) {
 
     comparator: function (todo) {
       return todo.get('ordinal');
+    },
+
+    show: function (what) {
+      this.trigger('show', what);
     }
 
   });
@@ -80,12 +85,22 @@ function(app, Pomodoro) {
     },
 
     initialize: function () {
-      this.options.tasks.on('add remove', this.render, this);
+      var tasks = this.options.tasks;
+      tasks.on('add remove', this.render, this);
       this.$el.sortable({
         stop: function (e, ui) {
           ui.item.trigger('drop', ui.item.index());
         }
       });
+      tasks.on('show', this.show, this);
+      tasks.on('change:completed', function () {
+        var task = tasks.find(function (task) {
+          return !task.get('completed');
+        });
+        if (task) {
+          task.trigger('render');
+        }
+      }, this);
     },
 
     serialize: function () {
@@ -95,13 +110,12 @@ function(app, Pomodoro) {
     },
 
     beforeRender: function () {
-      var that = this;
-      var tasks = this.options.tasks.filter(function (task) {
-        return task.get('completed') == that.options.completed;
+      var topIncomplete = this.options.tasks.find(function (task) {
+        return task.get('completed') == false;
       });
-      _.each(tasks, function (model, i) {
-        that.insertView(new Task.Views.Item({ model: model, top: i == 0 }));
-      });
+      this.options.tasks.each(function (model, i) {
+        this.insertView(new Task.Views.Item({ model: model, top: model.cid == topIncomplete.cid }));
+      }, this);
     },
 
     updateSort: function (e, model, index) {
@@ -110,8 +124,13 @@ function(app, Pomodoro) {
         model.save('ordinal', (i >= index) ? i + 1: i);
       });
       model.set('ordinal', index);
-      this.options.tasks.create(model, {at: index});
+      this.options.tasks.create(model, { at: index });
       this.render();
+    },
+
+    show: function (what) {
+      this.$el.toggleClass('complete', what == 'complete');
+      this.$el.toggleClass('incomplete', what == 'incomplete');
     }
 
   });
@@ -123,7 +142,14 @@ function(app, Pomodoro) {
     tagName: 'li',
 
     initialize: function () {
-      this.model.on('change:editing', this.render, this);
+      this.model.on('change:editing change:completed', this.render, this);
+      this.model.on('render', function () {
+        this.render();
+        this.options.top = true;
+        // hacky
+        $('.top-task').removeClass('top-task');
+        this.$el.addClass('top-task');
+      }, this);
     },
 
     events: {
@@ -145,7 +171,9 @@ function(app, Pomodoro) {
       if (this.options.top) {
         this.$el.addClass('top-task');
       }
-      this.$el[(this.model.get('editing') ? 'add' : 'remove') + 'Class']('editing');
+      this.$el.toggleClass('editing', this.model.get('editing'));
+      this.$el.toggleClass('complete', this.model.get('completed'));
+      this.$el.toggleClass('incomplete', !this.model.get('completed'));
       this.setViews({
         '.poms': new Pomodoro.Views.List({ collection: this.model.get('pomodoros') })
       });
@@ -201,11 +229,10 @@ function(app, Pomodoro) {
 
     addTask: function () {
       var title = $('[name="title"]', this.$el).val();
-      this.options.tasks.add({ 
+      this.options.tasks.create({ 
         content: title,
         ordinal: this.options.tasks.nextOrdinal()
       });
-      this.options.tasks.last().save();
     }
 
   });

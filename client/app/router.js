@@ -16,18 +16,17 @@ function(app, Timer, Task) {
     },
 
     index: function() {
-      this.setUp(false);
+      this.tasks.trigger('show', 'incomplete');
     },
 
     completed: function () {
-      this.setUp(true);
+      this.tasks.trigger('show', 'complete');
     },
 
-    setUp: function (completed) {
+    initialize: function (completed) {
       var collections = {
         timers: new Timer.Collection(),
-        tasks: new Task.Collection(),
-        completed: completed
+        tasks: new Task.Collection()
       };
       _.extend(this, collections);
       collections.tasks.fetch();

@@ -135,6 +135,7 @@ body > h1:first-child {
  * list
  */
 .task-list {
+    border-top: 1px solid #bbb;
     list-style: none;
     margin: 20px 0 0;
     padding: 0;
@@ -221,7 +222,6 @@ body > h1:first-child {
     padding: 15px 10px;
     background: #ddd;
     border: 1px solid #bbb;
-    border-width: 0 1px 1px 1px;
     box-shadow: 0 0 25px #bbb inset;
 }
 
@@ -300,4 +300,36 @@ body > h1:first-child {
 
 .editing .edit-controls {
   display: block;
+}
+
+.complete .complete {
+  display: block;
+}
+
+.complete .incomplete {
+  display: none;
+}
+
+.incomplete .complete {
+  display: none;
+}
+
+.incomplete .incomplete {
+  display: block;
+}
+
+.task-list.incomplete {
+  border-top:0;
+}
+
+.state-toggle {
+  text-align: center;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 15px;
+}
+
+.state-toggle a,
+.state-toggle a:visited {
+  color:#988;
 }

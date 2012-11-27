@@ -193,14 +193,20 @@ function(app) {
     },
 
     complete: function () {
-      this.stop();
-      this.options.tasks.first().toggle();
+      var timers = this.options.timers;
+      timers.last().stop();
+      timers.add({});
+      var task = this.options.tasks.find(function (task) {
+        return !task.get('completed');
+      });
+      task.get('pomodoros').add({});
+      task.save({ completed: true });
     },
 
     stop: function () {
-      this.options.timers.last().stop();
-      this.options.timers.add({});
-      this.options.timers.last().save();
+      var timers = this.options.timers;
+      timers.last().stop();
+      timers.add({});
     }
 
   });
@@ -256,8 +262,11 @@ function(app) {
           alarm.play();
           this.options.timers.add({});
           if (timer.get('type') == 'pomodoro') {
-            this.options.tasks.first().get('pomodoros').add({});
-            this.options.tasks.first().save();
+            var task = this.options.tasks.find(function (task) {
+              return !task.get('completed');
+            });
+            task.get('pomodoros').add({});
+            task.save();
           }
         }
       }, this);
