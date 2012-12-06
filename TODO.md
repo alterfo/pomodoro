@@ -2,3 +2,4 @@
 
 * Move over to handlebars
 * Move over to IndexedDB
+* Tests
