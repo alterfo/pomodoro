@@ -17,4 +17,4 @@ To get it running locally with node
 1. Clone the repo
 2. Install grunt-bbb `npm install -g bbb` 
 2. Navigate to the client folder
-3. `bbb server` then visit (http://localhost:8080)
+3. `bbb server` then visit [http://localhost:8000](http://localhost:8000)
