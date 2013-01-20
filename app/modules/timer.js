@@ -126,9 +126,9 @@ function(app) {
       // Pattern goes pomodoro, break, pomodoro, break, pomodoro, break, pomodoro, long-break
       this.on('add', function (timer) {
         var count = that.count;
-        if (count % 8 == 0) {
+        if (count % 8 === 0) {
           timer.set({ type: 'long' });
-        } else if (count % 2 == 0) {
+        } else if (count % 2 === 0) {
           timer.set({ type: 'break' });
         } else {
           timer.set({ type: 'pomodoro' });
@@ -152,7 +152,7 @@ function(app) {
     },
 
     serialize: function () {
-      var cssClass = this.model.get('started') ? this.model.get('type') == 'pomodoro' ? ' counting': ' waiting': '';
+      var cssClass = this.model.get('started') ? this.model.get('type') === 'pomodoro' ? ' counting': ' waiting': '';
       return {
         time: this.model.get('time'),
         count: this.model.get('count'),
@@ -178,11 +178,11 @@ function(app) {
     },
 
     serialize: function () {
-      return this.options.timers.last().attributes
+      return this.options.timers.last().attributes;
     },
 
     go: function () {
-      if (this.options.tasks.length == 0) {
+      if (this.options.tasks.length === 0) {
         return $('[name="title"]').focus();
       }
       this.options.timers.last().start();
@@ -228,7 +228,7 @@ function(app) {
     },
 
     serialize: function () {
-      return this.options.timers.last().attributes
+      return this.options.timers.last().attributes;
     },
 
     start: function () {
@@ -276,7 +276,7 @@ function(app) {
       var last = this.options.timers.last();
       var type = last.get('type');
       this.insertView(new Timer.Views.Clock({ model: last }));
-      this.insertView(new Timer.Views[(type == 'pomodoro' ? 'Pomodoro' : 'Break') + 'Controls'](this.options));
+      this.insertView(new Timer.Views[(type === 'pomodoro' ? 'Pomodoro' : 'Break') + 'Controls'](this.options));
     }
 
   });

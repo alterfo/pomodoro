@@ -21,7 +21,7 @@ function(app, Pomodoro) {
         editing: false,
         pomodoros: new Pomodoro.Collection(),
         content:   ''
-      }
+      };
     },
 
     initialize: function () {
@@ -29,12 +29,12 @@ function(app, Pomodoro) {
     },
 
     validate: function (attrs) {
-      if ($.trim(attrs.content + '').length == 0) {
+      if ($.trim(attrs.content + '').length === 0) {
         return "content can't be empty";
       }
     },
 
-    delete: function () {
+    del: function () {
       this.destroy();
     },
 
@@ -111,10 +111,10 @@ function(app, Pomodoro) {
 
     beforeRender: function () {
       var topIncomplete = this.options.tasks.find(function (task) {
-        return task.get('completed') == false;
+        return task.get('completed') === false;
       });
       this.options.tasks.each(function (model, i) {
-        this.insertView(new Task.Views.Item({ model: model, top: model.cid == topIncomplete.cid }));
+        this.insertView(new Task.Views.Item({ model: model, top: model.cid === topIncomplete.cid }));
       }, this);
     },
 
@@ -129,8 +129,8 @@ function(app, Pomodoro) {
     },
 
     show: function (what) {
-      this.$el.toggleClass('complete', what == 'complete');
-      this.$el.toggleClass('incomplete', what == 'incomplete');
+      this.$el.toggleClass('complete', what === 'complete');
+      this.$el.toggleClass('incomplete', what === 'incomplete');
     }
 
   });
@@ -155,7 +155,7 @@ function(app, Pomodoro) {
     events: {
       'dblclick h2': 'edit',
       'click .edit-update': 'update',
-      'click .edit-del': 'delete',
+      'click .edit-del': 'del',
       'drop': 'drop',
       'keypress .edit-input': 'updateOnEnter'
     },
@@ -193,7 +193,7 @@ function(app, Pomodoro) {
       });
     },
 
-    delete: function () {
+    del: function () {
       if (confirm('Are you sure?')) {
         this.model.collection.remove(this.model);
       }
