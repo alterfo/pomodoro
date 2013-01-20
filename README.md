@@ -1,14 +1,13 @@
 pomodoro
 ========
 
-Not your standard backbone TODO app. I needed some backone experience, so I built this. 
+Not your standard backbone TODO app.
 
 
-I used [grunt-bbb](https://github.com/backbone-boilerplate/grunt-bbb) to easily scaffold modules and develop locally.
+I used [grunt-bbb](https://github.com/backbone-boilerplate/grunt-bbb) to easily scaffold modules, develop locally and deploy to heroku
 
 
-You can view a [demo](https://dl.dropbox.com/u/138393/pomodoro/index.html), because of the url that dropbox assigns, 
-it kind of messes with the router
+You can view a [demo](http://pomodoro.demos.dan.shearmur.co.uk/)
 
 
 To get it running locally with node
