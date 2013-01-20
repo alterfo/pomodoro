@@ -2,5 +2,8 @@
   "name": "pomodoro",
   "dependencies": {
     "bbb": "0.1.16"
+  },
+  "engines": {
+    "node": "0.8.14"
   }
 }
