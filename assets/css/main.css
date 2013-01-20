@@ -223,6 +223,7 @@ body > h1:first-child {
     background: #ddd;
     border: 1px solid #bbb;
     box-shadow: 0 0 25px #bbb inset;
+    overflow: hidden;
 }
 
 .form-item {
