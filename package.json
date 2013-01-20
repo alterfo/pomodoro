@@ -1,0 +1,6 @@
+{
+  "name": "pomodoro",
+  "dependencies": {
+    "bbb": "0.1.16"
+  }
+}
